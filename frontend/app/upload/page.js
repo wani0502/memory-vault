@@ -1,7 +1,13 @@
+import UploadZone from "@/components/UploadZone";
+
 export default function UploadPage() {
   return (
-    <div className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-4xl font-bold">Upload</h1>
-    </div>
+    <main className="min-h-screen bg-black text-white flex flex-col items-center pt-20">
+      <h1 className="text-5xl font-bold mb-10">
+        Upload Memory
+      </h1>
+
+      <UploadZone />
+    </main>
   );
 }
