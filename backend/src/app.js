@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import authRoutes from "./routes/v1/auth.routes.js";
 
 const app = express();
 
@@ -17,5 +18,10 @@ app.get("/", (req, res) => {
     message: "Welcome to Memory Vault API ",
   });
 });
+
+
+app.use("/api/v1/auth", authRoutes);
+
+
 
 export default app;
