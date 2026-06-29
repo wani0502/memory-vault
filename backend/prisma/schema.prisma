@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -10,4 +5,74 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+ 
+}
+
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+  UNLISTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role Role @default(USER)
+
+  // Relations
+  albums         Album[]
+  uploadedPhotos Photo[]
+}
+
+model Album {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  visibility  Visibility  @default(PRIVATE)
+
+  // If null, first uploaded photo will be used as album cover
+  coverImage  String?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Owner of the album
+  ownerId     String
+  owner       User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  // Photos inside this album
+  photos      Photo[]
+}
+
+model Photo {
+  id          String   @id @default(uuid())
+
+  imageUrl    String
+  filename    String
+
+  fileSize    Int?
+  mimeType    String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Album relation
+  albumId     String
+  album       Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  // User who uploaded the image
+  uploadedBy  String
+  uploader    User @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
 }
