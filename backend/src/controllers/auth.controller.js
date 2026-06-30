@@ -36,3 +36,11 @@ export const login = asyncHandler(async (req, res) => {
         );
 
 });
+export const getCurrentUser=asyncHandler(async(req,res)=>{
+    const user=await authService.getCurrentUser(req.user.id);
+    return res.status(200).json(
+        new ApiResponse(
+            200,user,"User fetched successfully"
+        )
+    );
+});

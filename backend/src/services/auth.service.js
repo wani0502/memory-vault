@@ -61,8 +61,27 @@ export const  login = async(data)=>{
         user:{
             id:user.id,
             name:user.name,
-            email:user.email
+            email:user.email,
+            role:user.role
         },
         token
     };
+}
+
+export const getCurrentUser=async(id)=>{
+    const user=await prisma.user.findUnique({
+        where:{
+            id
+        },
+        select:{
+            id:true,
+            name:true,
+            email:true,
+            role:true,
+            createdAt:true
+        }
+    });
+    if(!user)
+        throw new ApiError(404,"User not found");
+    return user;
 }

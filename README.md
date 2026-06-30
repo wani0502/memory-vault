@@ -19,12 +19,10 @@ An AI-powered visual memory search platform that enables users to store, organiz
 - Tailwind CSS
 
 ### Backend
-- FastAPI
+- Express
+- Node
 - PostgreSQL
 
-### AI
-- OpenAI/Gemini
-- Qdrant Vector Database
 
 ## Status
 
