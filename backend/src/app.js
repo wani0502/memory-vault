@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/v1/auth.routes.js";
+import errorHandler from "./middlewares/errorHandler.js";
+
 
 const app = express();
 
@@ -10,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(errorHandler);//this should always be the last middleware
+
+
 
 // Test Route
 app.get("/", (req, res) => {
