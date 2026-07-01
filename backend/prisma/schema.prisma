@@ -57,22 +57,28 @@ model Album {
 }
 
 model Photo {
-  id          String   @id @default(uuid())
+  id           String   @id @default(uuid())
 
-  imageUrl    String
-  filename    String
+  imageUrl     String
+  filename     String
+  originalName String
 
-  fileSize    Int?
-  mimeType    String?
+  fileSize     Int?
+  mimeType     String?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  width         Int?
+  height        Int?
 
-  // Album relation
-  albumId     String
-  album       Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  // User who uploaded the image
-  uploadedBy  String
-  uploader    User @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+  isDeleted     Boolean @default(false)
+
+  // Album Relation
+  albumId       String
+  album         Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  // User Relation
+  uploadedBy    String
+  uploader      User @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
 }

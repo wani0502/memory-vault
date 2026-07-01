@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/v1/auth.routes.js";
 import errorHandler from "./middleware/error.middleware.js";
 import albumRoutes from "./routes/v1/album.routes.js";
+import photoRoutes from "./routes/v1/photo.routes.js";
+
 
 const app = express();
 
