@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/albums", albumRoutes);
+app.use("/api/v1/photos", photoRoutes);
 
 app.use(errorHandler);//this should always be the last middleware
 

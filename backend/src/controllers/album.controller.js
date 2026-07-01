@@ -1,7 +1,11 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import { createAlbumSchema } from "../validators/album.validator.js";
+import {
+    createAlbumSchema,
+    updateAlbumSchema
+} from "../validators/album.validator.js";
 import * as albumService from "../services/album.service.js";
+
 
 export const createAlbum = asyncHandler(async (req, res) => {
 
@@ -50,5 +54,38 @@ export const getAlbum = asyncHandler(async (req, res) => {
     );
 
 });
-export const updateAlbum = asyncHandler(async (req, res) => {});
-export const deleteAlbum = asyncHandler(async (req, res) => {});
+export const updateAlbum = asyncHandler(async (req, res) => {
+
+    const data = updateAlbumSchema.parse(req.body);
+
+    const album = await albumService.updateAlbum(
+        req.user.id,
+        req.params.id,
+        data
+    );
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            album,
+            "Album updated successfully"
+        )
+    );
+
+});
+export const deleteAlbum = asyncHandler(async (req, res) => {
+
+    await albumService.deleteAlbum(
+        req.user.id,
+        req.params.id
+    );
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            null,
+            "Album deleted successfully"
+        )
+    );
+
+});

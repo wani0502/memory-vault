@@ -9,3 +9,5 @@ export const createAlbumSchema = z.object({
         .enum(["PRIVATE", "PUBLIC", "UNLISTED"])
         .default("PRIVATE")
 });
+
+export const updateAlbumSchema = createAlbumSchema.partial();

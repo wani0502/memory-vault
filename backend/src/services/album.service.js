@@ -68,5 +68,54 @@ export const getAlbum = async (userId, albumId) => {
 
     return album;
 };
-export const updateAlbum = asyncHandler(async (req, res) => {});
-export const deleteAlbum = asyncHandler(async (req, res) => {});
+export const updateAlbum = async (userId, albumId, data) => {
+
+    const album = await prisma.album.findFirst({
+        where: {
+            id: albumId,
+            ownerId: userId,
+            isDeleted: false
+        }
+    });
+
+    if (!album)
+        throw new ApiError(404, "Album not found");
+
+    return await prisma.album.update({
+        where: {
+            id: albumId
+        },
+        data,
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            visibility: true,
+            updatedAt: true
+        }
+    });
+
+};
+export const deleteAlbum = async (userId, albumId) => {
+
+    const album = await prisma.album.findFirst({
+        where: {
+            id: albumId,
+            ownerId: userId,
+            isDeleted: false
+        }
+    });
+
+    if (!album)
+        throw new ApiError(404, "Album not found");
+
+    await prisma.album.update({
+        where: {
+            id: albumId
+        },
+        data: {
+            isDeleted: true
+        }
+    });
+
+};
