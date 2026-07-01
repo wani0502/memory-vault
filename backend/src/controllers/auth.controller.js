@@ -19,7 +19,8 @@ export const login = asyncHandler(async (req, res) => {
     const data = loginSchema.parse(req.body);
 
     const { user, token } = await authService.login(data);
-
+    console.log("✅ Login Controller Hit");
+    console.log(token);
     res
         .cookie("accessToken", token, {
             httpOnly: true,

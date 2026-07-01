@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/v1/auth.routes.js";
 import errorHandler from "./middleware/error.middleware.js";
-
+import albumRoutes from "./routes/v1/album.routes.js";
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/albums", albumRoutes);
 
 app.use(errorHandler);//this should always be the last middleware
 
